@@ -105,20 +105,21 @@ function toggleTheme() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Garder le code existant de DOMContentLoaded
     loadAvailableLists();
+    
     const savedTheme = localStorage.getItem('theme');
     const themeToggle = document.getElementById('themeToggle');
+    
     if (savedTheme === 'light') {
         document.body.setAttribute('data-theme', 'light');
         themeToggle.textContent = '☀️';
     }
 
-    // Ajouter l'écouteur d'événements pour la touche Entrée
+    // Ajouter l'écouteur pour la touche Entrée
     document.querySelectorAll('.filter-input').forEach(input => {
         input.addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
-                event.preventDefault(); // Empêcher le comportement par défaut
+                event.preventDefault();
                 updateResults();
             }
         });
@@ -228,4 +229,19 @@ function updateResults() {
 
     document.getElementById('wordCount').textContent = 
         `Mots trouvés: ${filteredWords.length}`;
+
+    // Réinitialiser les filtres si la case n'est pas cochée
+    const saveFilters = document.getElementById('saveFilters').checked;
+    if (!saveFilters) {
+        document.getElementById('startsWith').value = '';
+        document.getElementById('endsWith').value = '';
+        document.getElementById('contains').value = '';
+        document.getElementById('notContains').value = '';
+        document.getElementById('sequence').value = '';
+        document.getElementById('notSequence').value = '';
+        document.getElementById('syllablesMin').value = '';
+        document.getElementById('syllablesMax').value = '';
+        document.getElementById('lengthMin').value = '';
+        document.getElementById('lengthMax').value = '';
+    }
 }
