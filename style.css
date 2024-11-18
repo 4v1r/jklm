@@ -229,3 +229,19 @@ input {
     border-radius: 4px;
     background-color: var(--bg-color);
 }
+
+.save-filters-container {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.save-filters-container input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.save-filters-container label {
+    cursor: pointer;
+    font-family: 'VCR OSD Mono', monospace;
+}
