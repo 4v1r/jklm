@@ -105,15 +105,24 @@ function toggleTheme() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Garder le code existant de DOMContentLoaded
     loadAvailableLists();
-    
     const savedTheme = localStorage.getItem('theme');
     const themeToggle = document.getElementById('themeToggle');
-    
     if (savedTheme === 'light') {
         document.body.setAttribute('data-theme', 'light');
         themeToggle.textContent = '☀️';
     }
+
+    // Ajouter l'écouteur d'événements pour la touche Entrée
+    document.querySelectorAll('.filter-input').forEach(input => {
+        input.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Empêcher le comportement par défaut
+                updateResults();
+            }
+        });
+    });
 });
 
 function countSyllables(word) {
