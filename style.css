@@ -1,0 +1,231 @@
+@font-face {
+    font-family: 'VCR OSD Mono';
+    src: url('VCR_OSD_MONO.ttf') format('truetype');
+}
+
+:root {
+    --bg-color: #1a1b1e;
+    --text-color: #ffffff;
+    --panel-bg: #22262a;
+    --border-color: #2d3239;
+    --item-bg: #2d3239;
+    --button-bg: #4CAF50;
+    --button-hover: #45a049;
+    --highlight-red: #ff4747;
+    --highlight-yellow: #ffd700;
+}
+
+[data-theme="light"] {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --panel-bg: #f5f5f5;
+    --border-color: #ddd;
+    --item-bg: #f9f9f9;
+}
+
+body {
+    font-family: 'VCR OSD Mono', monospace;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.2;
+}
+
+.left-panel {
+    width: 400px;
+    padding: 20px;
+    background-color: var(--panel-bg);
+    border-right: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+.right-panel {
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 20px;
+}
+
+.lists-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: var(--item-bg);
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+.lists-section h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: var(--highlight-yellow);
+}
+
+.lists-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 8px;
+}
+
+.list-checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.list-checkbox-container input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.list-checkbox-container label {
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.filter-container {
+    display: grid;
+    grid-template-columns: 150px 200px;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.filter-container label {
+    align-self: center;
+}
+
+input {
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'VCR OSD Mono', monospace;
+}
+
+.results {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+}
+
+.word-item {
+    padding: 8px;
+    background-color: var(--item-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+#wordCount {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: var(--item-bg);
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    color: var(--highlight-yellow);
+}
+
+.length-group {
+    margin-bottom: 20px;
+    background-color: var(--panel-bg);
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.length-header {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--border-color);
+    color: var(--highlight-yellow);
+}
+
+#searchButton {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+    font-family: 'VCR OSD Mono', monospace;
+}
+
+#searchButton:hover {
+    background-color: var(--button-hover);
+}
+
+#themeToggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px;
+    background-color: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    font-family: 'VCR OSD Mono', monospace;
+}
+
+#themeToggle:hover {
+    background-color: var(--button-hover);
+}
+
+.submit-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.submit-container {
+    background-color: var(--item-bg);
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+.submit-container h3 {
+    margin: 0 0 15px 0;
+    color: var(--highlight-yellow);
+}
+
+.submit-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.submit-group input {
+    flex-grow: 1;
+}
+
+.submit-button {
+    padding: 8px 12px;
+    background-color: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'VCR OSD Mono', monospace;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+    background-color: var(--button-hover);
+}
+
+#submitStatus {
+    margin-top: 10px;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: var(--bg-color);
+}
