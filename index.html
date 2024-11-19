@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>mlkj.fun</title>
+    <title>Words</title>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -15,39 +15,64 @@
                 <!-- Les checkboxes seront ajoutées ici dynamiquement -->
             </div>
         </div>
-        
-        <div class="filter-container">
-            <label>Lettres initiales:</label>
-            <input type="text" id="startsWith" class="filter-input">
-            
-            <label>Lettres finales:</label>
-            <input type="text" id="endsWith" class="filter-input">
-            
-            <label>Avec ces lettres:</label>
-            <input type="text" id="contains" class="filter-input">
-            
-            <label>Sans ces lettres:</label>
-            <input type="text" id="notContains" class="filter-input">
-            
-            <label>Avec cette suite:</label>
-            <input type="text" id="sequence" class="filter-input">
-            
-            <label>Sans cette suite:</label>
-            <input type="text" id="notSequence" class="filter-input">
-            
-            <label>Nombre de syllabes (min):</label>
-            <input type="number" id="syllablesMin" class="filter-input">
-            
-            <label>Nombre de syllabes (max):</label>
-            <input type="number" id="syllablesMax" class="filter-input">
-            
-            <label>Nombre de lettres (min):</label>
-            <input type="number" id="lengthMin" class="filter-input">
-            
-            <label>Nombre de lettres (max):</label>
-            <input type="number" id="lengthMax" class="filter-input">
+
+        <div class="mode-selector">
+            <button class="mode-button mode-active" id="simpleMode">Simple</button>
+            <button class="mode-button" id="advancedMode">Avancé</button>
         </div>
         
+        <div class="filter-container">
+            <div class="filter-row" id="simpleFilter">
+                <label>Avec cette suite:</label>
+                <input type="text" id="sequence" class="filter-input">
+            </div>
+            
+            <div class="filter-row advanced-filter hidden">
+                <label>Lettres initiales:</label>
+                <input type="text" id="startsWith" class="filter-input">
+            </div>
+            
+            <div class="filter-row advanced-filter hidden">
+                <label>Lettres finales:</label>
+                <input type="text" id="endsWith" class="filter-input">
+            </div>
+            
+            <div class="filter-row advanced-filter hidden">
+                <label>Avec ces lettres:</label>
+                <input type="text" id="contains" class="filter-input">
+            </div>
+            
+            <div class="filter-row advanced-filter hidden">
+                <label>Sans ces lettres:</label>
+                <input type="text" id="notContains" class="filter-input">
+            </div>
+            
+            <div class="filter-row advanced-filter hidden">
+                <label>Sans cette suite:</label>
+                <input type="text" id="notSequence" class="filter-input">
+            </div>
+            
+            <div class="filter-row advanced-filter hidden">
+                <label>Nombre de syllabes (min):</label>
+                <input type="number" id="syllablesMin" class="filter-input">
+            </div>
+            
+            <div class="filter-row advanced-filter hidden">
+                <label>Nombre de syllabes (max):</label>
+                <input type="number" id="syllablesMax" class="filter-input">
+            </div>
+            
+            <div class="filter-row advanced-filter hidden">
+                <label>Nombre de lettres (min):</label>
+                <input type="number" id="lengthMin" class="filter-input">
+            </div>
+            
+            <div class="filter-row advanced-filter hidden">
+                <label>Nombre de lettres (max):</label>
+                <input type="number" id="lengthMax" class="filter-input">
+            </div>
+        </div>
+
         <div class="save-filters-container">
             <input type="checkbox" id="saveFilters">
             <label for="saveFilters">Sauvegarder les filtres</label>
