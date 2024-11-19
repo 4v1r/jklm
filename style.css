@@ -288,3 +288,134 @@ input {
 .filter-row.hidden {
     display: none;
 }
+
+/* Règles générales pour le responsive */
+@media screen and (max-width: 768px) {
+    body {
+        padding: 10px;
+        font-size: 18px; /* Police plus grande pour mobile */
+    }
+
+    .left-panel {
+        width: 100%;
+        margin-bottom: 20px;
+        border-right: none;
+    }
+
+    .right-panel {
+        margin-left: 0;
+    }
+
+    .filter-container {
+        grid-template-columns: 1fr; /* Une seule colonne sur mobile */
+        gap: 5px;
+    }
+
+    .filter-container label {
+        margin-top: 10px;
+    }
+
+    input {
+        font-size: 16px; /* Évite le zoom automatique sur iOS */
+        padding: 10px; /* Plus grand pour les doigts */
+    }
+
+    .word-item {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    #themeToggle {
+        top: 10px;
+        right: 10px;
+    }
+
+    .results {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .submit-group {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .submit-button {
+        padding: 10px;
+        width: 100%;
+    }
+
+    #searchButton {
+        padding: 15px;
+        font-size: 18px;
+    }
+
+    .mode-selector {
+        margin: 10px 0;
+    }
+
+    .mode-button {
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    /* Ajustements pour les très petits écrans */
+    @media screen and (max-width: 380px) {
+        body {
+            padding: 5px;
+        }
+
+        .left-panel {
+            padding: 10px;
+        }
+
+        .word-item {
+            font-size: 14px;
+        }
+
+        .results {
+            grid-template-columns: 1fr; /* Une seule colonne pour les très petits écrans */
+        }
+    }
+}
+
+/* Ajout de la prise en charge de l'orientation */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    body {
+        flex-direction: row;
+    }
+
+    .left-panel {
+        width: 40%;
+        height: 100vh;
+        overflow-y: auto;
+    }
+
+    .right-panel {
+        width: 60%;
+        height: 100vh;
+        overflow-y: auto;
+    }
+}
+
+/* Ajout du support pour les appareils avec notch */
+@supports (padding-top: env(safe-area-inset-top)) {
+    body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+    }
+}
+
+/* Amélioration de l'accessibilité au toucher */
+@media (hover: none) and (pointer: coarse) {
+    button, 
+    input[type="checkbox"],
+    .list-checkbox-container label {
+        min-height: 44px; /* Taille minimale recommandée pour les éléments tactiles */
+    }
+
+    .filter-container input {
+        min-height: 44px;
+    }
+}
