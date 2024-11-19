@@ -230,192 +230,151 @@ input {
     background-color: var(--bg-color);
 }
 
-.save-filters-container {
-    margin-top: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.save-filters-container input[type="checkbox"] {
-    cursor: pointer;
-}
-
-.save-filters-container label {
-    cursor: pointer;
-    font-family: 'VCR OSD Mono', monospace;
-}
-
-.mode-selector {
-    display: flex;
-    margin-bottom: 20px;
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.mode-button {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    background-color: var(--item-bg);
-    color: var(--text-color);
-    cursor: pointer;
-    font-family: 'VCR OSD Mono', monospace;
-    transition: background-color 0.3s;
-    border: 1px solid var(--border-color);
-}
-
-.mode-button:first-child {
-    border-right: none;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-}
-
-.mode-button:last-child {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-}
-
-.mode-active {
-    background-color: var(--button-bg);
-    color: white;
-}
-
-.filter-row {
-    display: contents;
-}
-
-.filter-row.hidden {
-    display: none;
-}
-
-/* Règles générales pour le responsive */
+/* Styles pour mobile */
 @media screen and (max-width: 768px) {
     body {
+        flex-direction: column;
         padding: 10px;
-        font-size: 18px; /* Police plus grande pour mobile */
+        font-size: 20px;
     }
 
     .left-panel {
         width: 100%;
         margin-bottom: 20px;
         border-right: none;
+        padding: 15px;
     }
 
     .right-panel {
+        width: 100%;
         margin-left: 0;
+        padding: 15px;
+    }
+
+    input, button, .word-item {
+        font-size: 18px;
+        padding: 12px;
     }
 
     .filter-container {
-        grid-template-columns: 1fr; /* Une seule colonne sur mobile */
-        gap: 5px;
+        grid-template-columns: 1fr;
+        gap: 15px;
     }
 
     .filter-container label {
-        margin-top: 10px;
+        font-size: 18px;
+        margin-bottom: 5px;
     }
 
-    input {
-        font-size: 16px; /* Évite le zoom automatique sur iOS */
-        padding: 10px; /* Plus grand pour les doigts */
+    .lists-section {
+        padding: 20px;
     }
 
-    .word-item {
-        font-size: 16px;
-        padding: 10px;
+    .lists-section h3 {
+        font-size: 22px;
+        margin-bottom: 15px;
     }
 
-    #themeToggle {
-        top: 10px;
-        right: 10px;
+    .list-checkbox-container {
+        font-size: 18px;
+        margin-bottom: 10px;
     }
 
-    .results {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    }
-
-    .submit-group {
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .submit-button {
-        padding: 10px;
-        width: 100%;
+    .list-checkbox-container input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
     }
 
     #searchButton {
         padding: 15px;
+        font-size: 20px;
+        margin: 20px 0;
+    }
+
+    .save-filters-container {
+        margin: 15px 0;
+    }
+
+    .save-filters-container input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+    }
+
+    .save-filters-container label {
         font-size: 18px;
     }
 
-    .mode-selector {
-        margin: 10px 0;
+    #wordCount {
+        font-size: 18px;
+        padding: 15px;
+        margin: 15px 0;
     }
 
-    .mode-button {
+    .length-header {
+        font-size: 20px;
+        padding: 15px;
+    }
+
+    .results {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .word-item {
+        font-size: 18px;
         padding: 12px;
-        font-size: 16px;
+        text-align: center;
     }
 
-    /* Ajustements pour les très petits écrans */
-    @media screen and (max-width: 380px) {
-        body {
-            padding: 5px;
-        }
+    .submit-section {
+        margin-top: 20px;
+    }
 
-        .left-panel {
-            padding: 10px;
-        }
+    .submit-container {
+        padding: 20px;
+    }
 
-        .word-item {
-            font-size: 14px;
-        }
+    .submit-container h3 {
+        font-size: 20px;
+    }
 
-        .results {
-            grid-template-columns: 1fr; /* Une seule colonne pour les très petits écrans */
-        }
+    .submit-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .submit-button {
+        width: 100%;
+        padding: 15px;
+        font-size: 18px;
+    }
+
+    #submitStatus {
+        font-size: 18px;
+        padding: 12px;
+    }
+
+    #themeToggle {
+        padding: 12px;
+        font-size: 20px;
     }
 }
 
-/* Ajout de la prise en charge de l'orientation */
-@media screen and (orientation: landscape) and (max-height: 500px) {
+/* Pour les très petits écrans */
+@media screen and (max-width: 380px) {
     body {
-        flex-direction: row;
+        padding: 5px;
     }
 
     .left-panel {
-        width: 40%;
-        height: 100vh;
-        overflow-y: auto;
-    }
-
-    .right-panel {
-        width: 60%;
-        height: 100vh;
-        overflow-y: auto;
+        padding: 10px;
     }
 }
 
-/* Ajout du support pour les appareils avec notch */
-@supports (padding-top: env(safe-area-inset-top)) {
+/* Support pour le safe-area sur iOS */
+@supports (padding: max(0px)) {
     body {
-        padding-top: env(safe-area-inset-top);
-        padding-bottom: env(safe-area-inset-bottom);
-        padding-left: env(safe-area-inset-left);
-        padding-right: env(safe-area-inset-right);
-    }
-}
-
-/* Amélioration de l'accessibilité au toucher */
-@media (hover: none) and (pointer: coarse) {
-    button, 
-    input[type="checkbox"],
-    .list-checkbox-container label {
-        min-height: 44px; /* Taille minimale recommandée pour les éléments tactiles */
-    }
-
-    .filter-container input {
-        min-height: 44px;
+        padding-top: max(20px, env(safe-area-inset-top));
+        padding-bottom: max(20px, env(safe-area-inset-bottom));
     }
 }
