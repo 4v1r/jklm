@@ -115,6 +115,23 @@ document.addEventListener('DOMContentLoaded', () => {
         themeToggle.textContent = '☀️';
     }
 
+    // Gestion des modes simple/avancé
+    const simpleMode = document.getElementById('simpleMode');
+    const advancedMode = document.getElementById('advancedMode');
+    const advancedFilters = document.querySelectorAll('.advanced-filter');
+
+    simpleMode.addEventListener('click', () => {
+        simpleMode.classList.add('mode-active');
+        advancedMode.classList.remove('mode-active');
+        advancedFilters.forEach(filter => filter.classList.add('hidden'));
+    });
+
+    advancedMode.addEventListener('click', () => {
+        advancedMode.classList.add('mode-active');
+        simpleMode.classList.remove('mode-active');
+        advancedFilters.forEach(filter => filter.classList.remove('hidden'));
+    });
+
     // Ajouter l'écouteur pour la touche Entrée
     document.querySelectorAll('.filter-input').forEach(input => {
         input.addEventListener('keypress', function(event) {
