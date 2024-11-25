@@ -1,4 +1,6 @@
 let wordLists = {};
+let sortReversed = false;
+let lastFilteredWords = [];
 
 async function loadAvailableLists() {
     try {
@@ -104,6 +106,24 @@ function toggleTheme() {
     }
 }
 
+function copyToClipboard(text, element) {
+    navigator.clipboard.writeText(text).then(() => {
+        const feedback = document.createElement('span');
+        feedback.textContent = 'Copié !';
+        feedback.className = 'copy-feedback';
+        element.appendChild(feedback);
+        
+        // Force reflow
+        feedback.offsetHeight;
+        
+        feedback.classList.add('show');
+        
+        setTimeout(() => {
+            feedback.remove();
+        }, 1000);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     loadAvailableLists();
     
@@ -115,7 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
         themeToggle.textContent = '☀️';
     }
 
-    // Gestion des modes simple/avancé
     const simpleMode = document.getElementById('simpleMode');
     const advancedMode = document.getElementById('advancedMode');
     const advancedFilters = document.querySelectorAll('.advanced-filter');
@@ -132,7 +151,6 @@ document.addEventListener('DOMContentLoaded', () => {
         advancedFilters.forEach(filter => filter.classList.remove('hidden'));
     });
 
-    // Ajouter l'écouteur pour la touche Entrée
     document.querySelectorAll('.filter-input').forEach(input => {
         input.addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
@@ -204,6 +222,11 @@ function updateResults() {
         return true;
     });
 
+    lastFilteredWords = filteredWords;
+    displayResults(filteredWords);
+}
+
+function displayResults(filteredWords) {
     const wordsByLength = {};
     filteredWords.forEach(word => {
         const length = word.length;
@@ -216,38 +239,51 @@ function updateResults() {
     const container = document.getElementById('resultsContainer');
     container.innerHTML = '';
     
-    Object.keys(wordsByLength)
-        .sort((a, b) => parseInt(a) - parseInt(b))
-        .forEach(length => {
-            const group = document.createElement('div');
-            group.className = 'length-group';
-            
-            const header = document.createElement('div');
-            header.className = 'length-header';
-            header.textContent = `${length} lettres (${wordsByLength[length].length} mots)`;
-            group.appendChild(header);
+    const sortButton = document.createElement('button');
+    sortButton.className = 'sort-button' + (sortReversed ? ' reversed' : '');
+    sortButton.innerHTML = '⏚';
+    sortButton.onclick = () => {
+        sortReversed = !sortReversed;
+        displayResults(lastFilteredWords);
+    };
+    container.appendChild(sortButton);
 
-            const wordsDiv = document.createElement('div');
-            wordsDiv.className = 'results';
-            wordsDiv.style.display = 'grid';
-            wordsDiv.style.gridTemplateColumns = 'repeat(auto-fill, minmax(200px, 1fr))';
-            wordsDiv.style.gap = '8px';
-
-            wordsByLength[length].sort().forEach(word => {
-                const wordDiv = document.createElement('div');
-                wordDiv.className = 'word-item';
-                wordDiv.textContent = word;
-                wordsDiv.appendChild(wordDiv);
-            });
-
-            group.appendChild(wordsDiv);
-            container.appendChild(group);
+    const lengths = Object.keys(wordsByLength)
+        .sort((a, b) => {
+            const comparison = parseInt(a) - parseInt(b);
+            return sortReversed ? -comparison : comparison;
         });
+
+    lengths.forEach(length => {
+        const group = document.createElement('div');
+        group.className = 'length-group';
+        
+        const header = document.createElement('div');
+        header.className = 'length-header';
+        header.textContent = `${length} lettres (${wordsByLength[length].length} mots)`;
+        group.appendChild(header);
+
+        const wordsDiv = document.createElement('div');
+        wordsDiv.className = 'results';
+        wordsDiv.style.display = 'grid';
+        wordsDiv.style.gridTemplateColumns = 'repeat(auto-fill, minmax(200px, 1fr))';
+        wordsDiv.style.gap = '8px';
+
+        wordsByLength[length].sort().forEach(word => {
+            const wordDiv = document.createElement('div');
+            wordDiv.className = 'word-item';
+            wordDiv.textContent = word;
+            wordDiv.onclick = () => copyToClipboard(word, wordDiv);
+            wordsDiv.appendChild(wordDiv);
+        });
+
+        group.appendChild(wordsDiv);
+        container.appendChild(group);
+    });
 
     document.getElementById('wordCount').textContent = 
         `Mots trouvés: ${filteredWords.length}`;
 
-    // Réinitialiser les filtres si la case n'est pas cochée
     const saveFilters = document.getElementById('saveFilters').checked;
     if (!saveFilters) {
         document.getElementById('startsWith').value = '';
