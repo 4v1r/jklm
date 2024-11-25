@@ -419,3 +419,61 @@ input {
         min-height: 44px;
     }
 }
+
+.word-item {
+    position: relative;
+    cursor: pointer;
+}
+
+.copy-feedback {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--button-bg);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.copy-feedback.show {
+    opacity: 1;
+    animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    70% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.sort-button {
+    position: fixed;
+    top: 20px;
+    right: 80px;
+    width: 41px;
+    height: 41px;
+    padding: 10px;
+    background-color: var(--item-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'VCR OSD Mono', monospace;
+    font-size: 22px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sort-button:hover {
+    background-color: var(--border-color);
+}
+
+.sort-button.reversed {
+    transform: rotate(180deg);
+}
