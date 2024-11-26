@@ -2,9 +2,14 @@ const express = require('express');
 const fs = require('fs').promises;
 const cors = require('cors');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-app.use(cors());
+const corsOptions = {
+    origin: process.env.FRONTEND_URL || 'https://jklmfun.netlify.app/',
+    optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 app.use(express.text());
 app.use(express.static('.'));
 
@@ -31,5 +36,5 @@ app.post('/request_withdraw.txt', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Serveur démarré sur http://localhost:${port}`);
+    console.log(`Serveur démarré sur le port ${port}`);
 });
