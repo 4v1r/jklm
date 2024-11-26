@@ -1,6 +1,7 @@
 let wordLists = {};
 let sortReversed = false;
 let lastFilteredWords = [];
+const BACKEND_URL = 'https://votre-app.railway.up.railway.app';
 
 async function loadAvailableLists() {
     try {
