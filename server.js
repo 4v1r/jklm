@@ -5,7 +5,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const corsOptions = {
-    origin: process.env.FRONTEND_URL || 'https://jklmfun.netlify.app/',
+    origin: process.env.FRONTEND_URL || 'https://jklmfun.netlify.app',
     optionsSuccessStatus: 200
 };
 
