@@ -70,7 +70,7 @@ function submitWord(action) {
 
     const filename = action === 'add' ? '/request_add.txt' : '/request_withdraw.txt';
     
-    fetch(`http://localhost:3000${filename}`, {
+    fetch(`${BACKEND_URL}${filename}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'text/plain',
