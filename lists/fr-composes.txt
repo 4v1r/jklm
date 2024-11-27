@@ -2048,4 +2048,13 @@ mi-close
 grand-ducaux
 pili-pili
 beni-oui-oui
-negro-carte
+negres-cartes
+vade-mecum
+femme-orchestre
+femmes-orchestres
+femmes-orchestre
+belles-pucelles
+belle-pucelle
+auteur-compositeur-interprete
+auteur-compositeur
+ne-me-touchez-pas
