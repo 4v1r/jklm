@@ -1,7 +1,141 @@
 let wordLists = {};
 let sortReversed = false;
 let lastFilteredWords = [];
+let currentLanguage = 'fr';
 const BACKEND_URL = 'https://jklm-production.up.railway.app';
+
+const translations = {
+    fr: {
+        listsTitle: "Listes de mots",
+        simple: "Simple",
+        advanced: "Avancé",
+        startsWith: "Lettres initiales:",
+        endsWith: "Lettres finales:",
+        contains: "Avec ces lettres:",
+        notContains: "Sans ces lettres:",
+        sequence: "Avec cette suite:",
+        notSequence: "Sans cette suite:",
+        syllablesMin: "Nombre de syllabes (min):",
+        syllablesMax: "Nombre de syllabes (max):",
+        lengthMin: "Nombre de lettres (min):",
+        lengthMax: "Nombre de lettres (max):",
+        saveFilters: "Sauvegarder les filtres",
+        search: "Rechercher",
+        submitWord: "Soumettre un mot",
+        add: "Ajouter",
+        remove: "Retirer",
+        copied: "Copié !",
+        wordsFound: "Mots trouvés:",
+        totalWords: "Nombre total de mots:",
+        letters: "lettres",
+        words: "mots",
+        enterWord: "Veuillez entrer un mot",
+        submitSuccess: "Mot \"{word}\" soumis avec succès pour {action}",
+        submitError: "Erreur lors de la soumission",
+        addition: "ajout",
+        withdrawal: "retrait"
+    },
+    en: {
+        listsTitle: "Word Lists",
+        simple: "Simple",
+        advanced: "Advanced",
+        startsWith: "Starts with:",
+        endsWith: "Ends with:",
+        contains: "Contains letters:",
+        notContains: "Doesn't contain:",
+        sequence: "Contains sequence:",
+        notSequence: "Doesn't contain sequence:",
+        syllablesMin: "Min syllables:",
+        syllablesMax: "Max syllables:",
+        lengthMin: "Min length:",
+        lengthMax: "Max length:",
+        saveFilters: "Save filters",
+        search: "Search",
+        submitWord: "Submit a word",
+        add: "Add",
+        remove: "Remove",
+        copied: "Copied!",
+        wordsFound: "Words found:",
+        totalWords: "Total words:",
+        letters: "letters",
+        words: "words",
+        enterWord: "Please enter a word",
+        submitSuccess: "Word \"{word}\" successfully submitted for {action}",
+        submitError: "Submission error",
+        addition: "addition",
+        withdrawal: "removal"
+    }
+};
+
+function toggleLanguage() {
+    const langButton = document.getElementById('languageToggle');
+    currentLanguage = currentLanguage === 'fr' ? 'en' : 'fr';
+    langButton.textContent = currentLanguage.toUpperCase();
+    updatePageLanguage();
+}
+
+function updatePageLanguage() {
+    const t = translations[currentLanguage];
+    
+    document.querySelector('.lists-section h3').textContent = t.listsTitle;
+    document.getElementById('simpleMode').textContent = t.simple;
+    document.getElementById('advancedMode').textContent = t.advanced;
+    document.getElementById('searchButton').textContent = t.search;
+    document.querySelector('.submit-container h3').textContent = t.submitWord;
+    
+    document.querySelectorAll('.filter-container label').forEach(label => {
+        const inputId = label.getAttribute('for');
+        switch(inputId) {
+            case 'startsWith': label.textContent = t.startsWith; break;
+            case 'endsWith': label.textContent = t.endsWith; break;
+            case 'contains': label.textContent = t.contains; break;
+            case 'notContains': label.textContent = t.notContains; break;
+            case 'sequence': label.textContent = t.sequence; break;
+            case 'notSequence': label.textContent = t.notSequence; break;
+            case 'syllablesMin': label.textContent = t.syllablesMin; break;
+            case 'syllablesMax': label.textContent = t.syllablesMax; break;
+            case 'lengthMin': label.textContent = t.lengthMin; break;
+            case 'lengthMax': label.textContent = t.lengthMax; break;
+        }
+    });
+    
+    document.querySelector('.submit-button[onclick="submitWord(\'add\')"]').textContent = t.add;
+    document.querySelector('.submit-button[onclick="submitWord(\'remove\')"]').textContent = t.remove;
+    document.querySelector('label[for="saveFilters"]').textContent = t.saveFilters;
+    
+    updateWordCountsLanguage();
+}
+
+function updateWordCountsLanguage() {
+    const t = translations[currentLanguage];
+    const totalWordsEl = document.getElementById('wordCount');
+    
+    if (totalWordsEl && totalWordsEl.textContent) {
+        if (totalWordsEl.textContent.includes('total')) {
+            const count = totalWordsEl.textContent.match(/\d+/)[0];
+            totalWordsEl.textContent = `${t.totalWords} ${count}`;
+        } else if (totalWordsEl.textContent.includes('trouvés')) {
+            const count = totalWordsEl.textContent.match(/\d+/)[0];
+            totalWordsEl.textContent = `${t.wordsFound} ${count}`;
+        }
+    }
+}
+
+function copyToClipboard(text, element) {
+    navigator.clipboard.writeText(text).then(() => {
+        const feedback = document.createElement('span');
+        feedback.textContent = translations[currentLanguage].copied;
+        feedback.className = 'copy-feedback';
+        element.appendChild(feedback);
+        
+        feedback.offsetHeight;
+        feedback.classList.add('show');
+        
+        setTimeout(() => {
+            feedback.remove();
+        }, 1000);
+    });
+}
 
 async function loadAvailableLists() {
     try {
@@ -56,15 +190,17 @@ async function loadAllLists() {
         }
     }
     
-    document.getElementById('wordCount').textContent = `Nombre total de mots: ${totalWords}`;
+    const t = translations[currentLanguage];
+    document.getElementById('wordCount').textContent = `${t.totalWords} ${totalWords}`;
 }
 
 function submitWord(action) {
     const input = action === 'add' ? document.getElementById('addWord') : document.getElementById('removeWord');
     const word = input.value.trim();
+    const t = translations[currentLanguage];
     
     if (!word) {
-        document.getElementById('submitStatus').textContent = 'Veuillez entrer un mot';
+        document.getElementById('submitStatus').textContent = t.enterWord;
         return;
     }
 
@@ -79,16 +215,17 @@ function submitWord(action) {
     })
     .then(response => {
         if (response.ok) {
+            const actionType = action === 'add' ? t.addition : t.withdrawal;
             document.getElementById('submitStatus').textContent = 
-                `Mot "${word}" soumis avec succès pour ${action === 'add' ? 'ajout' : 'retrait'}`;
+                t.submitSuccess.replace('{word}', word).replace('{action}', actionType);
             input.value = '';
         } else {
-            throw new Error('Erreur lors de la soumission');
+            throw new Error(t.submitError);
         }
     })
     .catch(error => {
         document.getElementById('submitStatus').textContent = 
-            `Erreur: ${error.message}`;
+            `${t.submitError}: ${error.message}`;
     });
 }
 
@@ -105,24 +242,6 @@ function toggleTheme() {
         themeToggle.textContent = '☀️';
         localStorage.setItem('theme', 'light');
     }
-}
-
-function copyToClipboard(text, element) {
-    navigator.clipboard.writeText(text).then(() => {
-        const feedback = document.createElement('span');
-        feedback.textContent = 'Copié !';
-        feedback.className = 'copy-feedback';
-        element.appendChild(feedback);
-        
-        // Force reflow
-        feedback.offsetHeight;
-        
-        feedback.classList.add('show');
-        
-        setTimeout(() => {
-            feedback.remove();
-        }, 1000);
-    });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -243,6 +362,7 @@ function displayResults(filteredWords) {
     const sortButton = document.createElement('button');
     sortButton.className = 'sort-button' + (sortReversed ? ' reversed' : '');
     sortButton.innerHTML = '⏚';
+    sortButton.title = 'Inverser le tri';
     sortButton.onclick = () => {
         sortReversed = !sortReversed;
         displayResults(lastFilteredWords);
