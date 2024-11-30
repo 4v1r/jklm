@@ -33,7 +33,9 @@ const translations = {
         submitSuccess: "Mot \"{word}\" soumis avec succès pour {action}",
         submitError: "Erreur lors de la soumission",
         addition: "ajout",
-        withdrawal: "retrait"
+        withdrawal: "retrait",
+        addPlaceholder: "Mot à ajouter",
+        removePlaceholder: "Mot à retirer"
     },
     en: {
         listsTitle: "Word Lists",
@@ -63,7 +65,9 @@ const translations = {
         submitSuccess: "Word \"{word}\" successfully submitted for {action}",
         submitError: "Submission error",
         addition: "addition",
-        withdrawal: "removal"
+        withdrawal: "removal",
+        addPlaceholder: "Word to add",
+        removePlaceholder: "Word to remove"
     }
 };
 
@@ -83,25 +87,32 @@ function updatePageLanguage() {
     document.getElementById('searchButton').textContent = t.search;
     document.querySelector('.submit-container h3').textContent = t.submitWord;
     
-    document.querySelectorAll('.filter-container label').forEach(label => {
-        const inputId = label.getAttribute('for');
-        switch(inputId) {
-            case 'startsWith': label.textContent = t.startsWith; break;
-            case 'endsWith': label.textContent = t.endsWith; break;
-            case 'contains': label.textContent = t.contains; break;
-            case 'notContains': label.textContent = t.notContains; break;
-            case 'sequence': label.textContent = t.sequence; break;
-            case 'notSequence': label.textContent = t.notSequence; break;
-            case 'syllablesMin': label.textContent = t.syllablesMin; break;
-            case 'syllablesMax': label.textContent = t.syllablesMax; break;
-            case 'lengthMin': label.textContent = t.lengthMin; break;
-            case 'lengthMax': label.textContent = t.lengthMax; break;
+    document.querySelectorAll('.filter-container .filter-row').forEach(row => {
+        const label = row.querySelector('label');
+        const input = row.querySelector('input');
+        if (input) {
+            switch(input.id) {
+                case 'startsWith': label.textContent = t.startsWith; break;
+                case 'endsWith': label.textContent = t.endsWith; break;
+                case 'contains': label.textContent = t.contains; break;
+                case 'notContains': label.textContent = t.notContains; break;
+                case 'sequence': label.textContent = t.sequence; break;
+                case 'notSequence': label.textContent = t.notSequence; break;
+                case 'syllablesMin': label.textContent = t.syllablesMin; break;
+                case 'syllablesMax': label.textContent = t.syllablesMax; break;
+                case 'lengthMin': label.textContent = t.lengthMin; break;
+                case 'lengthMax': label.textContent = t.lengthMax; break;
+            }
         }
     });
     
     document.querySelector('.submit-button[onclick="submitWord(\'add\')"]').textContent = t.add;
     document.querySelector('.submit-button[onclick="submitWord(\'remove\')"]').textContent = t.remove;
     document.querySelector('label[for="saveFilters"]').textContent = t.saveFilters;
+    
+    // Mise à jour des placeholders
+    document.getElementById('addWord').placeholder = t.addPlaceholder;
+    document.getElementById('removeWord').placeholder = t.removePlaceholder;
     
     updateWordCountsLanguage();
 }
@@ -114,7 +125,7 @@ function updateWordCountsLanguage() {
         if (totalWordsEl.textContent.includes('total')) {
             const count = totalWordsEl.textContent.match(/\d+/)[0];
             totalWordsEl.textContent = `${t.totalWords} ${count}`;
-        } else if (totalWordsEl.textContent.includes('trouvés')) {
+        } else if (totalWordsEl.textContent.includes('trouvés') || totalWordsEl.textContent.includes('found')) {
             const count = totalWordsEl.textContent.match(/\d+/)[0];
             totalWordsEl.textContent = `${t.wordsFound} ${count}`;
         }
