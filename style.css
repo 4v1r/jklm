@@ -40,12 +40,17 @@ body {
     background-color: var(--panel-bg);
     border-right: 1px solid var(--border-color);
     border-radius: 8px;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    bottom: 20px;
+    overflow-y: auto;
 }
 
 .right-panel {
     flex-grow: 1;
     padding: 20px;
-    margin-left: 20px;
+    margin-left: 440px;
 }
 
 .lists-section {
@@ -118,6 +123,8 @@ input {
     overflow-wrap: break-word;
     font-size: 14px;
     line-height: 1.2;
+    position: relative;
+    cursor: pointer;
 }
 
 #wordCount {
@@ -162,9 +169,9 @@ input {
 }
 
 #themeToggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
+    position: absolute;
+    top: 45px;
+    right: 45px;
     padding: 10px;
     background-color: var(--button-bg);
     color: white;
@@ -178,6 +185,83 @@ input {
 
 #themeToggle:hover {
     background-color: var(--button-hover);
+}
+
+#languageToggle {
+    position: absolute;
+    top: 45px;
+    right: 105px;
+    padding: 10px;
+    width: 41px;
+    height: 41px;
+    background-color: var(--item-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'VCR OSD Mono', monospace;
+    font-size: 16px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#languageToggle:hover {
+    background-color: var(--border-color);
+}
+
+.sort-button {
+    position: absolute;
+    top: 45px;
+    right: 165px;
+    width: 41px;
+    height: 41px;
+    padding: 10px;
+    background-color: var(--item-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'VCR OSD Mono', monospace;
+    font-size: 22px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sort-button:hover {
+    background-color: var(--border-color);
+}
+
+.sort-button.reversed {
+    transform: rotate(180deg);
+}
+
+.copy-feedback {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--button-bg);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.copy-feedback.show {
+    opacity: 1;
+    animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    70% { opacity: 1; }
+    100% { opacity: 0; }
 }
 
 .submit-section {
@@ -230,22 +314,6 @@ input {
     background-color: var(--bg-color);
 }
 
-.save-filters-container {
-    margin-top: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.save-filters-container input[type="checkbox"] {
-    cursor: pointer;
-}
-
-.save-filters-container label {
-    cursor: pointer;
-    font-family: 'VCR OSD Mono', monospace;
-}
-
 .mode-selector {
     display: flex;
     margin-bottom: 20px;
@@ -289,14 +357,30 @@ input {
     display: none;
 }
 
-/* Règles générales pour le responsive */
+.save-filters-container {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.save-filters-container input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.save-filters-container label {
+    cursor: pointer;
+    font-family: 'VCR OSD Mono', monospace;
+}
+
 @media screen and (max-width: 768px) {
     body {
         padding: 10px;
-        font-size: 18px; /* Police plus grande pour mobile */
+        font-size: 18px;
     }
 
     .left-panel {
+        position: static;
         width: 100%;
         margin-bottom: 20px;
         border-right: none;
@@ -307,201 +391,11 @@ input {
     }
 
     .filter-container {
-        grid-template-columns: 1fr; /* Une seule colonne sur mobile */
+        grid-template-columns: 1fr;
         gap: 5px;
     }
 
-    .filter-container label {
-        margin-top: 10px;
+    #themeToggle, #languageToggle, .sort-button {
+        position: absolute;
     }
-
-    input {
-        font-size: 16px; /* Évite le zoom automatique sur iOS */
-        padding: 10px; /* Plus grand pour les doigts */
-    }
-
-    .word-item {
-        font-size: 16px;
-        padding: 10px;
-    }
-
-    #themeToggle {
-        top: 10px;
-        right: 10px;
-    }
-
-    .results {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    }
-
-    .submit-group {
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .submit-button {
-        padding: 10px;
-        width: 100%;
-    }
-
-    #searchButton {
-        padding: 15px;
-        font-size: 18px;
-    }
-
-    .mode-selector {
-        margin: 10px 0;
-    }
-
-    .mode-button {
-        padding: 12px;
-        font-size: 16px;
-    }
-
-    /* Ajustements pour les très petits écrans */
-    @media screen and (max-width: 380px) {
-        body {
-            padding: 5px;
-        }
-
-        .left-panel {
-            padding: 10px;
-        }
-
-        .word-item {
-            font-size: 14px;
-        }
-
-        .results {
-            grid-template-columns: 1fr; /* Une seule colonne pour les très petits écrans */
-        }
-    }
-}
-
-/* Ajout de la prise en charge de l'orientation */
-@media screen and (orientation: landscape) and (max-height: 500px) {
-    body {
-        flex-direction: row;
-    }
-
-    .left-panel {
-        width: 40%;
-        height: 100vh;
-        overflow-y: auto;
-    }
-
-    .right-panel {
-        width: 60%;
-        height: 100vh;
-        overflow-y: auto;
-    }
-}
-
-/* Ajout du support pour les appareils avec notch */
-@supports (padding-top: env(safe-area-inset-top)) {
-    body {
-        padding-top: env(safe-area-inset-top);
-        padding-bottom: env(safe-area-inset-bottom);
-        padding-left: env(safe-area-inset-left);
-        padding-right: env(safe-area-inset-right);
-    }
-}
-
-/* Amélioration de l'accessibilité au toucher */
-@media (hover: none) and (pointer: coarse) {
-    button, 
-    input[type="checkbox"],
-    .list-checkbox-container label {
-        min-height: 44px; /* Taille minimale recommandée pour les éléments tactiles */
-    }
-
-    .filter-container input {
-        min-height: 44px;
-    }
-}
-
-.word-item {
-    position: relative;
-    cursor: pointer;
-}
-
-.copy-feedback {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: var(--button-bg);
-    color: white;
-    padding: 5px 10px;
-    border-radius: 4px;
-    opacity: 0;
-    transition: opacity 0.3s;
-    pointer-events: none;
-}
-
-.copy-feedback.show {
-    opacity: 1;
-    animation: fadeOut 1s forwards;
-}
-
-@keyframes fadeOut {
-    0% { opacity: 1; }
-    70% { opacity: 1; }
-    100% { opacity: 0; }
-}
-
-.sort-button {
-    position: fixed;
-    top: 20px;
-    right: 80px;
-    width: 41px;
-    height: 41px;
-    padding: 10px;
-    background-color: var(--item-bg);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: 'VCR OSD Mono', monospace;
-    font-size: 22px;
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.sort-button:hover {
-    background-color: var(--border-color);
-}
-
-.sort-button.reversed {
-    transform: rotate(180deg);
-}
-
-#languageToggle {
-    position: fixed;
-    top: 20px;
-    right: 80px;
-    width: 41px;
-    height: 41px;
-    padding: 10px;
-    background-color: var(--item-bg);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: 'VCR OSD Mono', monospace;
-    font-size: 16px;
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#languageToggle:hover {
-    background-color: var(--border-color);
-}
-
-.sort-button {
-    right: 140px; /* Décalé pour laisser la place au bouton de langue */
 }
