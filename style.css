@@ -477,3 +477,31 @@ input {
 .sort-button.reversed {
     transform: rotate(180deg);
 }
+
+#languageToggle {
+    position: fixed;
+    top: 20px;
+    right: 80px;
+    width: 41px;
+    height: 41px;
+    padding: 10px;
+    background-color: var(--item-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'VCR OSD Mono', monospace;
+    font-size: 16px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#languageToggle:hover {
+    background-color: var(--border-color);
+}
+
+.sort-button {
+    right: 140px; /* Décalé pour laisser la place au bouton de langue */
+}
