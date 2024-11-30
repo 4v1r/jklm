@@ -6,5 +6,9 @@
     {
         "id": "fr-composes",
         "name": "Français Composés"
-    }
+    },
+    {
+        "id": "en",
+        "name": "English"
+    },
 ]
